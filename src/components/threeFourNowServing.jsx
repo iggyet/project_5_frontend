@@ -24,7 +24,7 @@ export default function ThreeFourNowServing({
   } else {
     const firstOne = threeToFourPaxList.slice(0, 1);
     const modifiedData = firstOne.map((list) => ({
-      queueNumber: list.queueNumber,
+      queueNumber: list.id,
     }));
     const modModData = modifiedData.map((content) => (
       <ThreeFourDisplay

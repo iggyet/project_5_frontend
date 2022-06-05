@@ -26,7 +26,7 @@ export default function OneTwoDisplay({
     return (
       <div>
         <p>1-2 pax</p>
-        <p>{nowDisplay}</p>
+        <p>A{nowDisplay}</p>
       </div>
     );
   }

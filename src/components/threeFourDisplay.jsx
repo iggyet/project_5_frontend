@@ -26,7 +26,7 @@ export default function ThreeFourDisplay({
     return (
       <div>
         <p>3-4 pax</p>
-        <p>{nowDisplay}</p>
+        <p>B{nowDisplay}</p>
       </div>
     );
   }

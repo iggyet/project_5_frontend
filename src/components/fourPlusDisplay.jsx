@@ -26,7 +26,7 @@ export default function FourPlusDisplay({
     return (
       <div>
         <p>4+ pax</p>
-        <p>{nowDisplay}</p>
+        <p>C{nowDisplay}</p>
       </div>
     );
   }

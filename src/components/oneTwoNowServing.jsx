@@ -24,7 +24,7 @@ export default function OneTwoNowServing({
   } else {
     const firstOne = oneToTwoPaxList.slice(0, 1);
     const modifiedData = firstOne.map((list) => ({
-      queueNumber: list.queueNumber,
+      queueNumber: list.id,
     }));
     const modModData = modifiedData.map((content) => (
       <OneTwoDisplay

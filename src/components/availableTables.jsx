@@ -5,11 +5,12 @@ import React from "react";
 // eslint-disable-next-line
 export default function AvailableTables({ availableTables }) {
   const BACKEND_URL =
-    process.env.REACT_APP_BACKEND_URL || "http://localhost:3010";
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:3004";
 
   const updateOccupied = (element) => {
     const requestBody = {};
     requestBody.value = element.currentTarget.value;
+
     console.log(element);
     console.log(element.currentTarget.value);
     axios.post(`${BACKEND_URL}/updateOccupied`, requestBody).then((result) => {

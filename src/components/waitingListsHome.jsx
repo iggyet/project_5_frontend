@@ -1,7 +1,9 @@
-// import axios from "axios";
+import axios from "axios";
 import React, { useState } from "react";
 
 export default function WaitingListsHome() {
+  const BACKEND_URL =
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:3004";
   const handleChangeContactnumber = (event) => {
     // Retrieve input field value from JS event object.
     const inputCN = event.target.value;
@@ -23,6 +25,47 @@ export default function WaitingListsHome() {
   const [number, SetNumber] = useState(1);
   const [name, SetName] = useState([]);
   const [contactnumber, SetContactnumber] = useState([]);
+
+  const createQueue = () => {
+    if (number === 1 || number === 2) {
+      axios
+        .post(`${BACKEND_URL}/oneTwoCreateQueue`, {
+          name: name,
+          contactnumber: contactnumber,
+          tablefor: 2,
+          groupsize: number,
+        })
+        .then((result) => {
+          console.log(result);
+          console.log("1-2 q created");
+        });
+    }
+    if (number === 3 || number === 4) {
+      axios
+        .post(`${BACKEND_URL}/threeFourCreateQueue`, {
+          name: name,
+          contactnumber: contactnumber,
+          // groupsize: number,
+        })
+        .then((result) => {
+          console.log(result);
+          console.log("3-4 q created");
+        });
+    }
+    if (number > 4) {
+      axios
+        .post(`${BACKEND_URL}/fourPlusCreateQueue`, {
+          name: name,
+          contactnumber: contactnumber,
+          // tablefor: 6,
+          groupsize: number,
+        })
+        .then((result) => {
+          console.log(result);
+          console.log("4+ q created");
+        });
+    }
+  };
 
   function decrement() {
     if (number > 1) {
@@ -47,7 +90,9 @@ export default function WaitingListsHome() {
         <input value={name} onChange={handleChangeName} />
         <div>Contact Number</div>
         <input value={contactnumber} onChange={handleChangeContactnumber} />
-        <button type="button">TAKE MY QUEUE NUMBER</button>
+        <button type="button" onClick={createQueue}>
+          TAKE MY QUEUE NUMBER
+        </button>
       </div>
     </div>
   );

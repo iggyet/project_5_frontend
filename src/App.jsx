@@ -6,6 +6,9 @@ import WaitingListsHome from "./components/waitingListsHome";
 import OneTwoNowServing from "./components/oneTwoNowServing";
 import ThreeFourNowServing from "./components/threeFourNowServing";
 import FourPlusNowServing from "./components/fourPlusNowServing";
+import OneTwoNowServingStaff from "./components/oneTwoNowServingStaff";
+import ThreeFourNowServingStaff from "./components/threeFourNowServingStaff";
+import FourPlusNowServingStaff from "./components/fourPlusNowServingStaff";
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
 
@@ -19,6 +22,9 @@ function App() {
   const [oneToTwoPaxList, SetOneToTwoPaxList] = useState([]);
   const [threeToFourPaxList, SetThreeToFourPaxList] = useState([]);
   const [moreThanFourPaxList, SetMoreThanFourPaxList] = useState([]);
+  const [oneToTwoPaxStaffList, SetOneToTwoPaxStaffList] = useState([]);
+  const [threeToFourPaxStaffList, SetThreeToFourPaxStaffList] = useState([]);
+  const [moreThanFourPaxStaffList, SetMoreThanFourPaxStaffList] = useState([]);
   //  const [oneTwoDisplay, SetOneTwoDisplay] = useState("A1");
   //   const [oneTwoLastDisplayed, SetOneTwoLastDisplayed] = useState("A1");
   //   const [threeFourDisplay, SetThreeFourDisplay] = useState("B1");
@@ -71,6 +77,51 @@ function App() {
     });
     // SetNowServing({ oneToTwoPaxList, threeToFourPaxList, moreThanFourPaxList });
     // console.log(`now serving value ${nowServing}`);
+  };
+
+  const getStaffLists = () => {
+    console.log("called");
+    axios.get(`${BACKEND_URL}/getOneTwoStaffLists`).then((result) => {
+      // console.log(result);
+      if (result.data.rows.length === 0) {
+        // you don't have people waiting in this
+        console.log("1-2 is empty");
+        SetOneToTwoPaxStaffList(0);
+      } else {
+        // you have people waiting in this category
+        console.log(`1-2 result data rows is: ${result.data.rows}`);
+        SetOneToTwoPaxStaffList(result.data.rows);
+        console.log("1-2 done");
+      }
+    });
+    axios.get(`${BACKEND_URL}/getThreeFourStaffLists`).then((result) => {
+      console.log(result);
+      // SetThreeToFourPaxList(result.data.threeFourLists);
+      if (result.data.rows.length === 0) {
+        // you don't have people waiting in this
+        console.log("3-4 is empty");
+        SetThreeToFourPaxStaffList(0);
+      } else {
+        // you have people waiting in this category
+        console.log(`3-4 result data rows is: ${result.data.rows}`);
+        SetThreeToFourPaxStaffList(result.data.rows);
+        console.log("3-4 done");
+      }
+    });
+    axios.get(`${BACKEND_URL}/getFourPlusStaffLists`).then((result) => {
+      console.log(result);
+      // SetMoreThanFourPaxList(result.data.fourPlusLists);
+      if (result.data.rows.length === 0) {
+        // you don't have people waiting in this
+        console.log("4+ is empty");
+        SetMoreThanFourPaxStaffList(0);
+      } else {
+        // you have people waiting in this category
+        console.log(`4+ result data rows is: ${result.data.rows}`);
+        SetMoreThanFourPaxStaffList(result.data.rows);
+        console.log("4+ done");
+      }
+    });
   };
 
   const getAvailableTables = () => {
@@ -136,7 +187,15 @@ function App() {
         </button>
         <div className="queue">
           <WaitingListsHome />
-          <button onClick={getLists}>BRO CLICK DIS</button>
+          <button onClick={getLists}>GET DINER LISTS</button>
+          <button onClick={getStaffLists}>GET STAFF LISTS</button>
+          <OneTwoNowServingStaff oneToTwoPaxStaffList={oneToTwoPaxStaffList} />
+          <ThreeFourNowServingStaff
+            threeToFourPaxStaffList={threeToFourPaxStaffList}
+          />
+          <FourPlusNowServingStaff
+            moreThanFourPaxStaffList={moreThanFourPaxStaffList}
+          />
           <OneTwoNowServing
             oneToTwoPaxList={oneToTwoPaxList}
             // oneTwoDisplay={oneTwoDisplay}
