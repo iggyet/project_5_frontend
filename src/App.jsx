@@ -15,7 +15,7 @@ import FourPlusNowServingStaff from "./components/fourPlusNowServingStaff";
 axios.defaults.withCredentials = true;
 
 const BACKEND_URL =
-  process.env.REACT_APP_BACKEND_URL || "http://localhost:3004";
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:3010";
 
 function App() {
   const [availableTables, SetAvailableTables] = useState([]);

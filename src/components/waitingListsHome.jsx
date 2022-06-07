@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 export default function WaitingListsHome() {
   const BACKEND_URL =
-    process.env.REACT_APP_BACKEND_URL || "http://localhost:3004";
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:3010";
   const handleChangeContactnumber = (event) => {
     // Retrieve input field value from JS event object.
     const inputCN = event.target.value;

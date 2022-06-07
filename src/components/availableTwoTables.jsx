@@ -12,7 +12,7 @@ export default function AvailableTwoTables({
   oneToTwoPaxStaffList,
 }) {
   const BACKEND_URL =
-    process.env.REACT_APP_BACKEND_URL || "http://localhost:3004";
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:3010";
   console.log("available tables");
   console.log(availableTwoTables);
 

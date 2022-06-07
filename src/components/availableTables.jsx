@@ -8,7 +8,7 @@ import { useEffect } from "react";
 // eslint-disable-next-line
 export default function AvailableTables({ availableTables }) {
   const BACKEND_URL =
-    process.env.REACT_APP_BACKEND_URL || "http://localhost:3004";
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:3010";
   console.log("available tables");
   console.log(availableTables);
 
