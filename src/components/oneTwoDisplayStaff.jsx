@@ -1,13 +1,8 @@
 import React from "react";
 import axios from "axios";
+import moment from "moment";
 
-export default function OneTwoDisplayStaff({
-  nowServing,
-  // oneTwoDisplay,
-  // SetOneTwoDisplay,
-  // oneTwoLastDisplayed,
-  // SetOneTwoLastDisplayed,
-}) {
+export default function OneTwoDisplayStaff({ nowServing }) {
   if (!nowServing) {
     // SetOneTwoDisplay(oneTwoLastDisplayed);
     console.log("empty");
@@ -41,10 +36,6 @@ export default function OneTwoDisplayStaff({
         console.log("yay");
       });
     };
-    // const nowDisplay = nowServing.queueNumber;
-    // console.log(nowDisplay);
-    // SetOneTwoLastDisplayed(oneTwoDisplay);
-    // SetOneTwoDisplay(nowDisplay);
 
     return (
       <div>
@@ -52,7 +43,26 @@ export default function OneTwoDisplayStaff({
         <p>Name: {nowServing.name}</p>
         <p>Contact Number: {nowServing.contactNumber}</p>
         <p>Queue Status: {nowServing.queueStatus}</p>
-        <p>Taken at: {nowServing.takenAt}</p>
+        <p>
+          Taken at: {moment(nowServing.takenAt).format("DD/MM/YYYY h:mm:ss a")}
+        </p>
+        <p>
+          {(() => {
+            switch (nowServing.estimatedAvailableTime) {
+              case null:
+                return <p>Estimated Available Time: Now </p>;
+              default:
+                return (
+                  <p>
+                    Estimated to be Available at:{" "}
+                    {moment(nowServing.estimatedAvailableTime).format(
+                      "DD/MM/YYYY h:mm:ss a"
+                    )}{" "}
+                  </p>
+                );
+            }
+          })()}
+        </p>
         <button type="button" value={nowServing.id} onClick={deleting}>
           DELETE
         </button>

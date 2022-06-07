@@ -6,27 +6,48 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 
 // eslint-disable-next-line
-export default function AvailableTables({ availableTables }) {
+export default function AvailableFourTables({ availableFourTables }) {
   const BACKEND_URL =
     process.env.REACT_APP_BACKEND_URL || "http://localhost:3004";
   console.log("available tables");
-  console.log(availableTables);
+  console.log(availableFourTables);
 
   const [sortedTables, SetSortedTables] = useState([]);
 
   useEffect(() => {
-    SetSortedTables(availableTables);
+    SetSortedTables(availableFourTables);
     console.log("sorted tables");
     console.log(sortedTables);
   }, []);
+
+  function nullFirst(ascending) {
+    return function (a, b) {
+      // equal items sort equally
+      if (a.estimatedToBeAvailableAt === b.estimatedToBeAvailableAt) {
+        return 0;
+      }
+      // nulls sort before anything else
+      else if (a.estimatedToBeAvailableAt === null) {
+        return -1;
+      } else if (b.estimatedToBeAvailableAt === null) {
+        return 1;
+      }
+      // otherwise, if we're ascending, lowest sorts first
+      else if (ascending) {
+        return a.estimatedToBeAvailableAt < b.estimatedToBeAvailableAt ? -1 : 1;
+      }
+      // if descending, highest sorts first
+      else {
+        return a.estimatedToBeAvailableAt < b.estimatedToBeAvailableAt ? 1 : -1;
+      }
+    };
+  }
 
   const handleSort = () => {
     // console.log(availableTables);
     // SetSortedTables(availableTables);
     // console.log("sorting tables");
-    const sortedData = [...availableTables].sort((a, b) => {
-      return a.estimatedToBeAvailableAt > b.estimatedToBeAvailableAt ? 1 : -1;
-    });
+    const sortedData = [...availableFourTables].sort(nullFirst(true));
     SetSortedTables(sortedData);
     console.log(sortedTables);
     console.log(sortedData);
@@ -57,7 +78,7 @@ export default function AvailableTables({ availableTables }) {
   return (
     <div className="col-sm">
       <button type="button" onClick={handleSort}>
-        SORT TABLES
+        SORT 4 TABLES
       </button>
       <div className="tablesList">
         {sortedTables.map((availableTable) => (

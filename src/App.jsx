@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import AvailableTables from "./components/availableTables";
+import AvailableTwoTables from "./components/availableTwoTables";
+import AvailableFourTables from "./components/availableFourTables";
 import WaitingListsHome from "./components/waitingListsHome";
 import OneTwoNowServing from "./components/oneTwoNowServing";
 import ThreeFourNowServing from "./components/threeFourNowServing";
@@ -17,6 +19,8 @@ const BACKEND_URL =
 
 function App() {
   const [availableTables, SetAvailableTables] = useState([]);
+  const [availableTwoTables, SetAvailableTwoTables] = useState([]);
+  const [availableFourTables, SetAvailableFourTables] = useState([]);
   const [email, SetEmail] = useState([]);
   const [password, SetPassword] = useState([]);
   const [oneToTwoPaxList, SetOneToTwoPaxList] = useState([]);
@@ -131,6 +135,20 @@ function App() {
     });
   };
 
+  const getAvailableTwoTables = () => {
+    axios.get(`${BACKEND_URL}/availableTwoTables`).then((result) => {
+      console.log(`available table result data rows: ${result.data.rows}`);
+      SetAvailableTwoTables(result.data.availableTwoTables);
+    });
+  };
+
+  const getAvailableFourTables = () => {
+    axios.get(`${BACKEND_URL}/availableFourTables`).then((result) => {
+      console.log(`available table result data rows: ${result.data.rows}`);
+      SetAvailableFourTables(result.data.availableFourTables);
+    });
+  };
+
   const handleChangeEmail = (event) => {
     // Retrieve input field value from JS event object.
     const inputEmail = event.target.value;
@@ -167,16 +185,37 @@ function App() {
   //     return <div>WORKED BABY</div>;
   //   }
   // };
+  // const getTwoAndFourTables = () => {
+  //   getAvailableTwoTables();
+  //   getAvailableFourTables();
+  // };
 
   return (
     <div className="container">
       <div className="row">
         <h1 className="page-title">Wow Shopping!</h1>
         <AvailableTables availableTables={availableTables} />
+        <AvailableTwoTables
+          availableTwoTables={availableTwoTables}
+          oneToTwoPaxStaffList={oneToTwoPaxStaffList}
+        />
+        <AvailableFourTables availableFourTables={availableFourTables} />
         {availableTables.length === 0 && (
-          <button type="button" onClick={getAvailableTables}>
+          <div>
+            <button
+              type="button"
+              onClick={() => {
+                getAvailableTables();
+                getAvailableTwoTables();
+                getAvailableFourTables();
+              }}
+            >
+              Get 2-4 and total Tables
+            </button>
+            {/* <button type="button"    onClick={getAvailableTables}>
             Get Tables
-          </button>
+          </button> */}
+          </div>
         )}
         <div>E-mail</div>
         <input value={email} onChange={handleChangeEmail} />
@@ -189,7 +228,7 @@ function App() {
           <WaitingListsHome />
           <button onClick={getLists}>GET DINER LISTS</button>
           <button onClick={getStaffLists}>GET STAFF LISTS</button>
-          <OneTwoNowServingStaff oneToTwoPaxStaffList={oneToTwoPaxStaffList} />
+          {/* <OneTwoNowServingStaff oneToTwoPaxStaffLis t={oneToTwoPaxStaffList}/> */}
           <ThreeFourNowServingStaff
             threeToFourPaxStaffList={threeToFourPaxStaffList}
           />
@@ -227,3 +266,13 @@ function App() {
 }
 
 export default App;
+
+//  <Button
+//  onClick={() => {
+//    getAvailableTables();
+//    getAvailableTwoTables();
+//    getAvailableFourTables();
+//  }}
+//  >
+//    Cancel
+//  </Button>;

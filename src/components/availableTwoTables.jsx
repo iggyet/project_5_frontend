@@ -1,36 +1,36 @@
 import axios from "axios";
 import moment from "moment";
+import OneTwoNowServingStaff from "./oneTwoNowServingStaff";
 /* eslint-disable react/prop-types */
 
 import React, { useState } from "react";
 import { useEffect } from "react";
 
 // eslint-disable-next-line
-export default function AvailableTables({ availableTables }) {
+export default function AvailableTwoTables({
+  availableTwoTables,
+  oneToTwoPaxStaffList,
+}) {
   const BACKEND_URL =
     process.env.REACT_APP_BACKEND_URL || "http://localhost:3004";
   console.log("available tables");
-  console.log(availableTables);
+  console.log(availableTwoTables);
 
   const [sortedTables, SetSortedTables] = useState([]);
 
   useEffect(() => {
-    SetSortedTables(availableTables);
+    SetSortedTables(availableTwoTables);
     console.log("sorted tables");
     console.log(sortedTables);
   }, []);
 
   const handleSort = () => {
-    // console.log(availableTables);
-    // SetSortedTables(availableTables);
-    // console.log("sorting tables");
-    const sortedData = [...availableTables].sort((a, b) => {
+    const sortedData = [...availableTwoTables].sort((a, b) => {
       return a.estimatedToBeAvailableAt > b.estimatedToBeAvailableAt ? 1 : -1;
     });
     SetSortedTables(sortedData);
     console.log(sortedTables);
     console.log(sortedData);
-    // SetAvailableTables(sortedTables);
   };
 
   const updateOccupied = (element) => {
@@ -57,8 +57,12 @@ export default function AvailableTables({ availableTables }) {
   return (
     <div className="col-sm">
       <button type="button" onClick={handleSort}>
-        SORT TABLES
+        SORT 2 TABLES
       </button>
+      <OneTwoNowServingStaff
+        sortedTables={sortedTables}
+        oneToTwoPaxStaffList={oneToTwoPaxStaffList}
+      />
       <div className="tablesList">
         {sortedTables.map((availableTable) => (
           <div key={availableTable.id}>
